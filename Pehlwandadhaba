@@ -1,0 +1,256 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import {
+  MapPin, Phone, Clock, Star, MessageCircle, Flame, Utensils,
+  Quote, ChefHat, Heart, Award,
+} from "lucide-react";
+import { SiteNav } from "@/components/SiteNav";
+import { ReviewsMarquee } from "@/components/ReviewsMarquee";
+import heroImg from "@/assets/dhaba-hero.jpg";
+
+const WHATSAPP_NUMBER = "919915401136";
+
+export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Pehalwan Da Dhaba — Authentic Punjabi Food in Ludhiana" },
+      {
+        name: "description",
+        content:
+          "Pehalwan Da Dhaba in Karabara, Ludhiana — tawa chicken, butter chicken & all-you-can-eat Punjabi thalis. Open till 11:30 pm.",
+      },
+      { property: "og:title", content: "Pehalwan Da Dhaba — Ludhiana" },
+      {
+        property: "og:description",
+        content:
+          "All-you-can-eat Punjabi dhaba in Ludhiana. Rated 4.1 on Google. Order or message us on WhatsApp.",
+      },
+      { property: "og:image", content: heroImg },
+    ],
+  }),
+  component: Index,
+});
+
+const TRIBUTES = [
+  {
+    icon: ChefHat,
+    title: "A pehalwan's portion, a poet's flavour",
+    body: "Smoke from the tandoor, the slow hiss of dal on the chulha, ghee meeting cumin. Every plate carries decades of practice. This is not fast food — this is fed food.",
+  },
+  {
+    icon: Heart,
+    title: "Ludhiana eats here",
+    body: "Truck drivers, college students, families three generations deep — the benches don't care who you are. You sit, you're served, you're full. That is what makes a dhaba a dhaba.",
+  },
+  {
+    icon: Flame,
+    title: "The tawa never sleeps",
+    body: "Watch the cook flip the tawa chicken — that wrist, that rhythm, that confidence. Muscle memory from a thousand evenings of feeding hungry Punjab. You taste the practice in every bite.",
+  },
+  {
+    icon: Award,
+    title: "Rated by the people",
+    body: "125+ Google reviews and 4.1 stars. But the real review is the queue at 9 pm, the regulars who don't need a menu, the strangers who become friends across butter chicken.",
+  },
+];
+
+function Index() {
+  const [message, setMessage] = useState("");
+
+  const openWhatsApp = () => {
+    const text = message.trim() || "Hi! I'd like to place a request at Pehalwan Da Dhaba.";
+    window.open(
+      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`,
+      "_blank",
+      "noopener,noreferrer",
+    );
+  };
+
+  return (
+    <div className="min-h-screen bg-background font-body">
+      <SiteNav />
+
+      {/* HERO */}
+      <header className="relative isolate overflow-hidden">
+        {/* Background image */}
+        <img
+          src={heroImg}
+          alt="A spread of Punjabi dhaba food: butter chicken, tandoori chicken, dal makhani, rotis"
+          width={1600}
+          height={1024}
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        {/* Warm gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/55 to-black/80" />
+        <div className="absolute inset-0 bg-gradient-warm opacity-30 mix-blend-multiply" />
+
+        <div className="relative mx-auto flex min-h-[88vh] max-w-5xl flex-col items-center justify-center px-6 py-24 text-center text-primary-foreground">
+          {/* Crossed forks ornament */}
+          <div className="flex items-center gap-3 text-secondary">
+            <span className="h-px w-12 bg-secondary/60" />
+            <div className="relative grid place-items-center">
+              <Utensils className="h-7 w-7 rotate-12" />
+              <Utensils className="absolute h-7 w-7 -rotate-12 opacity-70" />
+            </div>
+            <span className="h-px w-12 bg-secondary/60" />
+          </div>
+
+          <p className="mt-5 text-[0.7rem] font-semibold uppercase tracking-[0.4em] text-secondary">
+            Est. on Karabara Road · Ludhiana
+          </p>
+
+          <h1 className="mt-4 font-display text-6xl leading-[0.95] drop-shadow-lg sm:text-8xl md:text-9xl">
+            Pehalwan
+            <span className="mt-2 block text-secondary">Da Dhaba</span>
+          </h1>
+
+          <div className="mt-6 flex items-center gap-2 text-secondary">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <Star key={i} className={`h-4 w-4 ${i < 4 ? "fill-current" : "opacity-40"}`} />
+            ))}
+            <span className="ml-2 text-xs uppercase tracking-widest text-primary-foreground/80">
+              4.1 · 125 reviews
+            </span>
+          </div>
+
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-primary-foreground/90 sm:text-lg">
+            Slow-cooked dal, smoky tawa chicken, rotis straight from the tandoor.
+            All-you-can-eat Punjabi soul food in the heart of Ludhiana.
+          </p>
+
+          <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
+            <a
+              href="#contact"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-warm transition hover:opacity-90"
+            >
+              <MessageCircle className="h-4 w-4" /> Order on WhatsApp
+            </a>
+            <a
+              href="#menu"
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-primary-foreground/40 bg-background/10 px-6 py-3 text-sm font-semibold backdrop-blur transition hover:bg-background/20"
+            >
+              See the menu
+            </a>
+          </div>
+
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs uppercase tracking-widest text-primary-foreground/75">
+            <span className="inline-flex items-center gap-1.5"><Clock className="h-3.5 w-3.5" /> Open · closes 11:30 pm</span>
+            <span className="inline-flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5" /> Karabara Rd</span>
+            <span className="inline-flex items-center gap-1.5"><Phone className="h-3.5 w-3.5" /> 099154 01136</span>
+          </div>
+        </div>
+      </header>
+
+      {/* MENU HIGHLIGHTS */}
+      <section id="menu" className="mx-auto max-w-5xl px-6 py-20">
+        <div className="text-center">
+          <span className="text-xs font-semibold uppercase tracking-[0.3em] text-primary">
+            Signature plates
+          </span>
+          <h2 className="mt-2 font-display text-4xl text-foreground sm:text-5xl">
+            From our tandoor to your table
+          </h2>
+        </div>
+        <div className="mt-10 grid gap-5 sm:grid-cols-3">
+          {[
+            { name: "Tawa Chicken", note: "Smoky, spicy, our signature" },
+            { name: "Butter Chicken", note: "Slow-simmered, silky, creamy" },
+            { name: "Veg Thali", note: "All you can eat, fresh tandoor rotis" },
+          ].map((d) => (
+            <div
+              key={d.name}
+              className="group relative overflow-hidden rounded-2xl border border-border bg-card p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-warm"
+            >
+              <div className="absolute -right-6 -top-6 h-20 w-20 rounded-full bg-gradient-warm opacity-15 transition group-hover:scale-150" />
+              <Flame className="h-5 w-5 text-primary" />
+              <h3 className="mt-3 font-display text-2xl text-foreground">{d.name}</h3>
+              <p className="mt-2 text-sm text-muted-foreground">{d.note}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* REVIEWS MARQUEE */}
+      <div id="reviews">
+        <ReviewsMarquee />
+      </div>
+
+      {/* PRAISE (inline, no separate page) */}
+      <section id="praise" className="relative overflow-hidden bg-gradient-warm py-20 text-primary-foreground">
+        <div className="absolute inset-0 opacity-20" style={{ backgroundImage: "radial-gradient(circle at 15% 20%, rgba(255,255,255,0.35), transparent 45%), radial-gradient(circle at 85% 70%, rgba(0,0,0,0.35), transparent 50%)" }} />
+        <div className="relative mx-auto max-w-5xl px-6">
+          <div className="text-center">
+            <Quote className="mx-auto h-9 w-9 opacity-80" />
+            <h2 className="mt-3 font-display text-4xl leading-tight sm:text-6xl">
+              In praise of the dhaba
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-base opacity-95">
+              A love letter to a small kitchen on Karabara Road that has been feeding
+              Ludhiana like family.
+            </p>
+          </div>
+
+          <p className="mx-auto mt-12 max-w-3xl text-center font-display text-2xl leading-relaxed sm:text-3xl">
+            "Some places sell food. Pehalwan Da Dhaba serves belonging."
+          </p>
+
+          <div className="mt-14 grid gap-5 sm:grid-cols-2">
+            {TRIBUTES.map((t) => (
+              <article
+                key={t.title}
+                className="rounded-2xl border border-primary-foreground/15 bg-background/10 p-6 backdrop-blur transition hover:bg-background/15"
+              >
+                <div className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-background/20">
+                  <t.icon className="h-5 w-5" />
+                </div>
+                <h3 className="mt-4 font-display text-2xl">{t.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed opacity-90">{t.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CONTACT / REQUEST */}
+      <section id="contact" className="mx-auto max-w-3xl px-6 py-20">
+        <div className="rounded-3xl border border-border bg-card p-7 shadow-warm sm:p-9">
+          <div className="flex items-start gap-3">
+            <div className="grid h-11 w-11 place-items-center rounded-xl bg-gradient-warm text-primary-foreground shadow-warm">
+              <MessageCircle className="h-5 w-5" />
+            </div>
+            <div>
+              <h2 className="font-display text-2xl text-foreground">Send us a request</h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Booking a table, asking about today's menu, or placing an order? Tap below
+                to message us on WhatsApp.
+              </p>
+            </div>
+          </div>
+
+          <textarea
+            value={message}
+            onChange={(e) => setMessage(e.target.value.slice(0, 500))}
+            placeholder="Type your request… (e.g. Table for 4 tonight at 9 pm)"
+            rows={4}
+            className="mt-5 w-full resize-none rounded-xl border border-input bg-background p-3 text-sm text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary/30"
+          />
+          <div className="mt-1 text-right text-xs text-muted-foreground">
+            {message.length}/500
+          </div>
+
+          <button
+            onClick={openWhatsApp}
+            className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-base font-semibold text-primary-foreground shadow-warm transition hover:opacity-90 sm:w-auto"
+          >
+            <MessageCircle className="h-5 w-5" />
+            Send on WhatsApp
+          </button>
+        </div>
+      </section>
+
+      <footer className="border-t border-border bg-muted/40 py-8 text-center text-xs text-muted-foreground">
+        470, Karabara Rd, Karabara Basti, Ludhiana, Punjab 141008 · Open till 11:30 pm
+      </footer>
+    </div>
+  );
+}
